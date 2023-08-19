@@ -86,7 +86,7 @@ void AbsoluteRotaryEncoder::loop()
   int currentPos = getPosition();
   if (this->_lastPos != currentPos)
   {
-    if (abs(this->_lastPos - currentPos) > ((int) (this->_nPos * 0.25)))
+    if (abs(this->_lastPos - currentPos) > ((int) (this->_nPos * 0.75)))
     {
       // Finished one full rotation
       if (this->_rotateDirection == ROTATE_CW)
