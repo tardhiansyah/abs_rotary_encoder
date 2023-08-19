@@ -21,7 +21,7 @@ int AbsoluteRotaryEncoder::binToPos()
 
 void AbsoluteRotaryEncoder::init(const byte *gpio, bool multiTurn)
 {
-  _isMultiTurn = multiTurn;
+  this->_isMultiTurn = multiTurn;
 
   for (uint8_t i = 0; i < this->_resolution; i++)
   {
@@ -43,9 +43,9 @@ void AbsoluteRotaryEncoder::readBinISR()
 
 int AbsoluteRotaryEncoder::getPosition()
 {
-  if (_isMultiTurn)
+  if (this->_isMultiTurn)
   {
-    return _nPos * _nRotation + binToPos();
+    return this->_nPos * this->_nRotation + binToPos();
   }
   
   return binToPos();
@@ -68,47 +68,47 @@ bool AbsoluteRotaryEncoder::isZero()
 
 int AbsoluteRotaryEncoder::getRotateDirection()
 {
-  return _rotateDirection;
+  return this->_rotateDirection;
 }
 
 int AbsoluteRotaryEncoder::getNumberOfRotation()
 {
-  return _nRotation;
+  return this->_nRotation;
 }
 
 void AbsoluteRotaryEncoder::setNumberOfRotation(int n)
 {
-  _nRotation = n;
+  this->_nRotation = n;
 }
 
 void AbsoluteRotaryEncoder::loop()
 {
   int currentPos = getPosition();
-  if (_lastPos != currentPos)
+  if (this->_lastPos != currentPos)
   {
-    if (abs(_lastPos - currentPos) > ((int) (_nPos * 0.25)))
+    if (abs(this->_lastPos - currentPos) > ((int) (this->_nPos * 0.25)))
     {
       // Finished one full rotation
-      if (_rotateDirection == ROTATE_CW)
+      if (this->_rotateDirection == ROTATE_CW)
       {
-        _nRotation++;
+        this->_nRotation++;
       }
-      else if (_rotateDirection == ROTATE_CCW)
+      else if (this->_rotateDirection == ROTATE_CCW)
       {
-        _nRotation--;
+        this->_nRotation--;
       }
     }
     else
     {
-      if (_lastPos < currentPos)
+      if (this->_lastPos < currentPos)
       {
-        _rotateDirection = ROTATE_CW;
+        this->_rotateDirection = ROTATE_CW;
       }
-      else if (_lastPos > currentPos)
+      else if (this->_lastPos > currentPos)
       {
-        _rotateDirection = ROTATE_CCW;
+        this->_rotateDirection = ROTATE_CCW;
       }
     }
-    _lastPos = currentPos;
+    this->_lastPos = currentPos;
   } 
 }
